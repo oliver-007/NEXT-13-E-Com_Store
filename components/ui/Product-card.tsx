@@ -12,7 +12,6 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
-  console.log("data-product-card", data);
   const router = useRouter();
 
   const handleClick = () => {
