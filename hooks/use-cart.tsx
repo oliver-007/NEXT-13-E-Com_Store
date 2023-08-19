@@ -15,18 +15,22 @@ const useCart = create(
       items: [],
       addItem: (data) => {
         const currentItems = get().items;
+        const selectedItem_name = data.name;
         const existingItem = currentItems.find((item) => item.id === data.id);
 
         if (existingItem) {
-          return toast.success("Item already in cart");
+          return toast.success(`"${selectedItem_name}" — already in cart.`);
         }
 
         set({ items: [...currentItems, data] });
-        toast.success("Item added to cart.");
+        toast.success(`"${selectedItem_name}" — added to cart.`);
       },
       removeItem: (id) => {
-        set({ items: [...get().items.filter((item) => item.id !== id)] });
-        toast.success("Item removed from cart.");
+        const currentItems = get().items;
+        const selectedItem = currentItems.find((item) => item.id === id);
+
+        set({ items: [...currentItems.filter((item) => item.id !== id)] });
+        toast.success(`"${selectedItem?.name}" — removed from cart.`);
       },
       removeAll: () => {
         set({ items: [] });
@@ -40,4 +44,3 @@ const useCart = create(
 );
 
 export default useCart;
-// 08:44:38
