@@ -58,5 +58,3 @@ const Summary = () => {
 };
 
 export default Summary;
-
-// 09:46:13
