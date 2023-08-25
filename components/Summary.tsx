@@ -1,17 +1,20 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Currency from "./ui/Currency";
 import Button from "./ui/Button";
 import { useSearchParams } from "next/navigation";
 import { toast } from "react-hot-toast";
 import useCart from "@/hooks/use-cart";
 import axios from "axios";
+import { Loader } from "./Loader";
 
 const Summary = () => {
   const searchParams = useSearchParams();
   const items = useCart((state) => state.items);
   const removeAll = useCart((state) => state.removeAll); //  The useCart is a hook , and you should not call it like a regular function. Hooks in React should only be called within functional components, not outside them or within other functions. The correct way to use a hook is to provide a function to access specific state from the hook's return value.hook
+
+  const [Loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (searchParams.get("success")) {
@@ -28,6 +31,7 @@ const Summary = () => {
   }, 0);
 
   const onCheckOut = async () => {
+    setLoading(true);
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
       {
@@ -51,7 +55,7 @@ const Summary = () => {
         disabled={items.length === 0}
         className="w-full mt-6"
       >
-        Checkout
+        {!Loading ? "Checkout" : <Loader />}
       </Button>
     </div>
   );
