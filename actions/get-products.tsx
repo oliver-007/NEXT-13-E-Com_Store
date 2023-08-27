@@ -20,7 +20,7 @@ const getProducts = async (query: Query): Promise<ProductType[]> => {
       isFeatured: query.isFeatured,
     },
   });
-  const res = await fetch(url);
+  const res = await fetch(url, { cache: "no-store" });
   return res.json();
 };
 
